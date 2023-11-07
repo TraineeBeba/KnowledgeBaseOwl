@@ -1,0 +1,192 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:owl="http://www.w3.org/2002/07/owl#"
+         xml:base="http://test.org/onto.owl"
+         xmlns="http://test.org/onto.owl#"
+         xmlns:owlr="http://www.lesfleursdunormal.fr/static/_downloads/owlready_ontology.owl#">
+
+<owl:Ontology rdf:about="http://test.org/onto.owl"/>
+
+<owl:ObjectProperty rdf:about="#do">
+  <rdfs:domain rdf:resource="#Student"/>
+  <rdfs:range rdf:resource="#LabWork"/>
+  <owl:inverseOf rdf:resource="#lab_is_done"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Зроблено лаби</rdfs:label>
+  <owlr:python_name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">labs</owlr:python_name>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#lab_is_done">
+  <rdfs:domain rdf:resource="#LabWork"/>
+  <rdfs:range rdf:resource="#Student"/>
+  <owl:inverseOf rdf:resource="#do"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Студенти, що зробили лабу</rdfs:label>
+  <owlr:python_name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">lab_is_done</owlr:python_name>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#subject_have_Lab">
+  <rdfs:domain rdf:resource="#Subject"/>
+  <rdfs:range rdf:resource="#LabWork"/>
+  <owl:inverseOf rdf:resource="#lab_from_subject"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Предмет має лаби</rdfs:label>
+  <owlr:python_name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">subject_have_Lab</owlr:python_name>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#lab_from_subject">
+  <rdfs:domain rdf:resource="#LabWork"/>
+  <rdfs:range rdf:resource="#Subject"/>
+  <owl:inverseOf rdf:resource="#subject_have_Lab"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Лаби з предмету</rdfs:label>
+  <owlr:python_name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Lab_subject_have</owlr:python_name>
+</owl:ObjectProperty>
+
+<owl:Class rdf:about="#Student">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:subClassOf>
+    <owl:Class>
+      <owl:oneOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#Біба"/>
+        <rdf:Description rdf:about="#Беба"/>
+        <rdf:Description rdf:about="#Боба"/>
+        <rdf:Description rdf:about="#Буба"/>
+      </owl:oneOf>
+    </owl:Class>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#do"/>
+      <owl:allValuesFrom>
+        <owl:Class>
+          <owl:oneOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#База знань"/>
+            <rdf:Description rdf:about="#База знань"/>
+            <rdf:Description rdf:about="#5. REST"/>
+            <rdf:Description rdf:about="#База знань"/>
+            <rdf:Description rdf:about="#ЛР1"/>
+            <rdf:Description rdf:about="#5. REST"/>
+          </owl:oneOf>
+        </owl:Class>
+      </owl:allValuesFrom>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Студент</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#LabWork">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Лаба</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#Subject">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Предмет</rdfs:label>
+</owl:Class>
+
+<owl:NamedIndividual rdf:about="#IT">
+  <rdf:type rdf:resource="#Subject"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#IS">
+  <rdf:type rdf:resource="#Subject"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#База знань">
+  <rdf:type rdf:resource="#LabWork"/>
+  <subject_have_Lab rdf:resource="#IT"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ЛР1">
+  <rdf:type rdf:resource="#LabWork"/>
+  <subject_have_Lab rdf:resource="#IT"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#5. REST">
+  <rdf:type rdf:resource="#LabWork"/>
+  <subject_have_Lab rdf:resource="#IS"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Біба">
+  <rdf:type rdf:resource="#Student"/>
+  <do rdf:resource="#База знань"/>
+  <rdf:type>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#do"/>
+      <owl:allValuesFrom>
+        <owl:Class>
+          <owl:oneOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#База знань"/>
+          </owl:oneOf>
+        </owl:Class>
+      </owl:allValuesFrom>
+    </owl:Restriction>
+  </rdf:type>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Боба">
+  <rdf:type rdf:resource="#Student"/>
+  <do rdf:resource="#База знань"/>
+  <do rdf:resource="#ЛР1"/>
+  <do rdf:resource="#5. REST"/>
+  <rdf:type>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#do"/>
+      <owl:allValuesFrom>
+        <owl:Class>
+          <owl:oneOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#База знань"/>
+            <rdf:Description rdf:about="#ЛР1"/>
+            <rdf:Description rdf:about="#5. REST"/>
+          </owl:oneOf>
+        </owl:Class>
+      </owl:allValuesFrom>
+    </owl:Restriction>
+  </rdf:type>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Буба">
+  <rdf:type rdf:resource="#Student"/>
+  <rdf:type>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#do"/>
+      <owl:allValuesFrom rdf:resource="http://www.w3.org/2002/07/owl#Nothing"/>
+    </owl:Restriction>
+  </rdf:type>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Беба">
+  <rdf:type rdf:resource="#Student"/>
+  <do rdf:resource="#База знань"/>
+  <do rdf:resource="#5. REST"/>
+  <rdf:type>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#do"/>
+      <owl:allValuesFrom>
+        <owl:Class>
+          <owl:oneOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#База знань"/>
+            <rdf:Description rdf:about="#5. REST"/>
+          </owl:oneOf>
+        </owl:Class>
+      </owl:allValuesFrom>
+    </owl:Restriction>
+  </rdf:type>
+</owl:NamedIndividual>
+
+<owl:AllDifferent>
+  <owl:distinctMembers rdf:parseType="Collection">
+    <rdf:Description rdf:about="#База знань"/>
+    <rdf:Description rdf:about="#ЛР1"/>
+    <rdf:Description rdf:about="#5. REST"/>
+  </owl:distinctMembers>
+</owl:AllDifferent>
+
+<owl:AllDifferent>
+  <owl:distinctMembers rdf:parseType="Collection">
+    <rdf:Description rdf:about="#IT"/>
+    <rdf:Description rdf:about="#IS"/>
+  </owl:distinctMembers>
+</owl:AllDifferent>
+
+
+</rdf:RDF>
